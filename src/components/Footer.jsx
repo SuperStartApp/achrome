@@ -7,8 +7,8 @@ const Footer = () => {
         WebApp progettata con il <span className="text-red-600">❤️</span> da 
         <span className="font-bold ml-1"> SuPer & </span>
         <span className="font-bold">
-          <span className="text-white">comunic</span>
-          <span className="text-red-600">Attivamente</span>
+          <span className="text-white">comunicA</span>
+          <span className="text-red-600">ttivamente</span>
         </span>
       </p>
       
