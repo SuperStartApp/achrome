@@ -55,87 +55,87 @@ const Home = () => {
   return (
     <div className="bg-black min-h-screen flex flex-col">
       
-      {/* HEADER SECTION (SPOTIFY STYLE) */}
-      <header className="relative h-[75vh] w-full flex flex-col justify-end pb-12 px-6 overflow-hidden">
+      {/* 1. HEADER SECTION (Solo Immagine + Nome Band) */}
+      <header className="relative h-[70vh] w-full flex items-end pb-10 px-8 overflow-hidden">
         {/* Immagine di Sfondo */}
         <div className="absolute inset-0 z-0">
           <img 
             src={settings.home_image_url} 
-            className="w-full h-full object-cover opacity-60" 
+            className="w-full h-full object-cover opacity-70" 
             alt="Achrome Background" 
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
+          {/* Gradiente che sfuma verso il basso per connettersi al nero della pagina */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
         </div>
 
-        {/* Content Area (Testo e Tasti) */}
-        <div className="relative z-10 w-full max-w-7xl mx-auto">
-          {/* Titolo Gigante */}
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-6xl md:text-8xl font-black tracking-tighter mb-1"
-          >
-            ACHROME
-          </motion.h1>
-          
-          {/* TESTO DINAMICO SOTTO IL NOME (Viene da Supabase!) */}
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="text-lg md:text-xl font-medium text-zinc-300 mb-8"
-          >
-            {settings.home_text}
-          </motion.p>
-
-          {/* Action Bar (Tasti) */}
-          <div className="flex flex-wrap items-center gap-4">
-            {/* Tasto Play */}
-            <motion.button 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={toggleAudio}
-              className="bg-green-500 text-black p-5 rounded-full shadow-xl hover:bg-green-400 transition-colors"
-            >
-              {isPlaying ? <Pause fill="black" size={32} /> : <Play fill="black" size={32} />}
-            </motion.button>
-
-            {/* Tasto Segui */}
-            <motion.button 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setIsFollowing(!isFollowing)}
-              className={`flex items-center gap-2 px-8 py-3 rounded-full font-bold transition-all ${
-                isFollowing ? 'bg-zinc-800 text-white' : 'bg-white text-black'
-              }`}
-            >
-              {isFollowing ? <><Check size={20}/> Seguito</> : <><UserPlus size={20}/> Segui già</>}
-            </motion.button>
-
-            {/* Tasto Spotify */}
-            <motion.a 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              href={settings.spotify_link || "#"} 
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center gap-2 bg-zinc-800/80 backdrop-blur-md text-white px-6 py-3 rounded-full font-bold hover:bg-zinc-700 transition-all"
-            >
-              <Music size={20} /> Spotify <ExternalLink size={16} />
-            </motion.a>
-          </div>
-        </div>
+        {/* Nome della Band (In basso a sinistra sulla foto) */}
+        <motion.h1 
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="relative z-10 text-6xl md:text-8xl font-black tracking-tighter"
+        >
+          ACHROME
+        </motion.h1>
       </header>
 
-      {/* MAIN CONTENT SECTION (DONAZIONE + NEWSLETTER) */}
-      <main className="flex-grow flex flex-col items-center">
+      {/* 2. MAIN CONTENT SECTION (Testo, Tasti, Donazioni, Newsletter) */}
+      <main className="flex-grow flex flex-col items-center px-6">
         
-        {/* Sezione Donazione */}
+        {/* Testo Dinamico (Appena fuori dalla foto) */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="w-full max-w-4xl text-left mb-10"
+        >
+          <p className="text-xl md:text-2xl font-medium text-zinc-300 leading-relaxed">
+            {settings.home_text}
+          </p>
+        </motion.div>
+
+        {/* Action Bar (Tasti Play, Segui, Spotify) */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="flex flex-wrap items-center gap-4 mb-16"
+        >
+          {/* Tasto Play */}
+          <button 
+            onClick={toggleAudio}
+            className="bg-green-500 text-black p-5 rounded-full shadow-xl hover:bg-green-400 transition-all active:scale-95"
+          >
+            {isPlaying ? <Pause fill="black" size={32} /> : <Play fill="black" size={32} />}
+          </button>
+
+          {/* Tasto Segui */}
+          <button 
+            onClick={() => setIsFollowing(!isFollowing)}
+            className={`flex items-center gap-2 px-8 py-3 rounded-full font-bold transition-all active:scale-95 ${
+              isFollowing ? 'bg-zinc-800 text-white' : 'bg-white text-black'
+            }`}
+          >
+            {isFollowing ? <><Check size={20}/> Seguito</> : <><UserPlus size={20}/> Segui già</>}
+          </button>
+
+          {/* Tasto Spotify */}
+          <a 
+            href={settings.spotify_link || "#"} 
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-2 bg-zinc-800/80 backdrop-blur-md text-white px-6 py-3 rounded-full font-bold hover:bg-zinc-700 transition-all active:scale-95"
+          >
+            <Music size={20} /> Spotify <ExternalLink size={16} />
+          </a>
+        </motion.div>
+
+        {/* Sezione Donazione (Solo se attiva) */}
         {settings.donation_enabled && (
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mt-12 w-full max-w-md px-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+            className="w-full max-w-md mb-20"
           >
             <a 
               href="https://paypal.me/tuouser" 
@@ -152,8 +152,8 @@ const Home = () => {
         <motion.section 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="mt-16 w-full max-w-md px-6 text-center mb-20"
+          transition={{ delay: 0.8 }}
+          className="w-full max-w-md text-center mb-24"
         >
           <h3 className="text-xl font-bold mb-2">Rimani aggiornato</h3>
           <p className="text-zinc-400 text-sm mb-6">Iscriviti per ricevere le date dei nuovi concerti e news esclusive.</p>
